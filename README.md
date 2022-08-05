@@ -4,7 +4,7 @@ A *hacky?* tool to get Postman to generate custom code without diving into the i
 
 ## How do I use this?
 1. Get/Open a successfully working postman request.
-2. Download a released build and copy the code contents.
+2. Download a [released](https://github.com/mark05e/nicesnippet-postman-codegen/releases) build and copy the code contents.
 3. Open the Tests tab
 4. Paste in the code.
 5. Hit Send
