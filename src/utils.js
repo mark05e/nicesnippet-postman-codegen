@@ -5,7 +5,14 @@ export const hasData = {
         return data && !(Object.keys(data).length === 0) && data[0] !== ''
     },
     body: function(data) {
-        return data && !(Object.keys(data).length === 0)
+        if (data && !(Object.keys(data).length === 0)) {
+            let dataType = data.mode;
+            if (data[dataType] != "" ) {
+                return true
+            } else {
+                return false
+            }
+        }
     },
     header: function(data,showSystemHeaders) {
         if (data.hasOwnProperty('system')) {
