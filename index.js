@@ -322,6 +322,7 @@ function writeLog(text = "Hello World") {
     triggerCode += '\n   // ASSIGN ERROR_MESSAGE = "We have a Boo Boo! =( "'
     triggerCode += '\n   // ERROR_MESSAGE.throw()'
     triggerCode += '\n}'
+    triggerCode += '\n\n// Support:\n// Report issues over at https://github.com/mark05e/nicesnippet-postman-codegen/issues'
   
     return triggerCode
   }
