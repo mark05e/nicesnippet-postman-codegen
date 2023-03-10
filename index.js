@@ -307,7 +307,7 @@ function writeLog(text = "Hello World") {
     triggerCode += '\n\n// Debug'
     triggerCode += '\nTRACE "RestProxy_Response_StatusCode = {RestProxy_Response_StatusCode}"'
     triggerCode += '\nTRACE "RestProxy_Response_StatusDesc = {RestProxy_Response_StatusDesc}"'
-    triggerCode += '\nTRACE "RestProxy_Response = {RestProxy_Response1.asjson()}"'
+    triggerCode += '\nTRACE "RestProxy_Response = {RestProxy_Response.asjson()}"'
     triggerCode += '\n\nIF (RestProxy_Response_StatusCode >= 200 & RestProxy_Response_StatusCode < 300)'
     triggerCode += '\n{'
     triggerCode += '\n    // '
