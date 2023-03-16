@@ -342,6 +342,8 @@ function writeLog(text = "Hello World") {
         console.log({basicAuth})
         authCode += 'RestProxy.AddHeader("Authorization","' + basicAuth + '")'
         return authCode
+    } else if (jsonObj.type.toLowerCase() === 'noauth') {
+        return authCode
     } else {
         return 'ERROR: genAuthCode - Unsupported Auth mode\n\n' + JSON.stringify(jsonObj)
         throw 'Unsupported Auth mode'
