@@ -301,7 +301,7 @@ function writeLog(text = "Hello World") {
   }
   
   function genTriggerCode() {
-    let triggerCode = 'ASSIGN RestProxy_Response = RestProxy.MakeRestRequest(RestProxy_Url, "", RestProxy_AcceptType, RestProxy_Method)'
+    let triggerCode = 'ASSIGN RestProxy_Response = RestProxy.MakeRestRequest(RestProxy_Url, RestProxy_Body, RestProxy_AcceptType, RestProxy_Method)'
     triggerCode += '\nRestProxy_Response_StatusCode = RestProxy.StatusCode'
     triggerCode += '\nRestProxy_Response_StatusDesc = RestProxy.StatusDescription'
     triggerCode += '\n\n// Debug'
