@@ -241,6 +241,26 @@ function writeLog(text = "Hello World") {
   
         // TRACE "RestProxy_Body = {RestProxy_Body}"
         bodyCode += '\n\n// Debug\nTRACE "RestProxy_Body = {RestProxy_Body}"'
+    } else if (jsonObj.mode.toLowerCase() === 'urlencoded') {
+      let keyValuesArray = jsonObj.urlencoded
+  
+      let textOutput = '';
+  
+      for (let i = 0; i < keyValuesArray.length; i++) {
+        const { key, value } = keyValuesArray[i];
+        const variableName = `${key}_value`;
+      
+        textOutput += `ASSIGN ${variableName} = "${value}"\n`;
+        
+        if (i === 0) {
+          textOutput += `RestProxy_Body.append("${key}={${variableName}.urlencode()}")\n`;
+        } else {
+          textOutput += `RestProxy_Body.append("&${key}={${variableName}.urlencode()}")\n`;
+        }
+      }
+  
+      bodyCode += "\n" + textOutput
+      
     } else {
         return 'ERROR: genBodyCode - Unhandled Body mode!\n\n' + JSON.stringify(jsonObj)
         throw 'Unhandled Body mode!'
@@ -343,7 +363,18 @@ function writeLog(text = "Hello World") {
         authCode += 'RestProxy.AddHeader("Authorization","' + basicAuth + '")'
         return authCode
     } else if (jsonObj.type.toLowerCase() === 'noauth') {
-        return authCode
+      return authCode
+    } else if (jsonObj.type.toLowerCase() === 'bearer') {
+      // example: const inputArray = [{"key":"token","type":"any","value":"eyJ0eXAiOiJKXXXXXXXXXXXXXXXXXXXXXX"}];
+      //     result: [ { key: 'Auth', value: 'Bearer eyJ0eXAiOiJKXXXXXXXXXXXXXXXXXXXXXX' } ]
+      inputArray = jsonObj.bearer
+      const outputArray = inputArray.map(item => {
+          if (item.key === "token") {
+            return { key: "Auth", value: `Bearer ${item.value}` };
+          }
+          return item;
+        });
+        return genHeaderCode(outputArray)
     } else {
         return 'ERROR: genAuthCode - Unsupported Auth mode\n\n' + JSON.stringify(jsonObj)
         throw 'Unsupported Auth mode'
