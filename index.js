@@ -143,14 +143,17 @@ function writeLog(text = "Hello World") {
     return queryKvArray
   }
   
-  function genHeaderCode(jsonObj){
+  function genHeaderCode(jsonObj,skipRestProxy = false){
     // console.log({jsonObj}) // Array of Object
     // discoveryProxy.ContentType = "application/json"
     // skillProxy.AddHeader("Authorization" , "Bearer {bearerToken}")
     let headerCode = ""
     let acceptType = 0 // json
-    headerCode += 'ASSIGN RestProxy = GetRESTProxy()'
-    if (Object.keys(jsonObj).length === 0 || Object.keys(jsonObj).length === undefined) {
+    if (!skipRestProxy) {
+          headerCode += 'ASSIGN RestProxy = GetRESTProxy()'
+      }
+    
+      if (Object.keys(jsonObj).length === 0 || Object.keys(jsonObj).length === undefined) {
         console.log("genHeaderCode - no header length")
         return headerCode
     }
@@ -209,7 +212,8 @@ function writeLog(text = "Hello World") {
             // Add lines to request body
             let escapeLine = escapeStrings(line)
             // console.log({escapeLine})
-            bodyCode += '\nRestProxy_Body.append($' + JSON.stringify(escapeLine + insertNewLine()) + ')'
+                      let lineToAppend = '\nRestProxy_Body.append($' + JSON.stringify(escapeLine + insertNewLine()) + ')'
+            bodyCode += lineToAppend.replace('\\\\','\\')
             // bodyCode += '\nRestProxy_Body.append($"{CHAR(10)}")'
         })
   
@@ -315,9 +319,9 @@ function writeLog(text = "Hello World") {
     if (!(line.includes("{{") && line.includes("}}"))) {
         result = line.replace(/{/g, '\\{')    //  {  -->  \{
     }
-  
-    // return result
-    return line
+      
+    return result
+    // return line
   }
   
   function genTriggerCode() {
@@ -350,7 +354,7 @@ function writeLog(text = "Hello World") {
   
   function genAuthCode(jsonObj) {
     let authCode = ""
-    // console.log({jsonObj})
+    console.log({jsonObj})
     if (jsonObj.type.toLowerCase() === 'basic') {
         let username = password = ""
         jsonObj.basic.forEach(item => {
@@ -374,7 +378,7 @@ function writeLog(text = "Hello World") {
           }
           return item;
         });
-        return genHeaderCode(outputArray)
+        return genHeaderCode(outputArray, true)
     } else {
         return 'ERROR: genAuthCode - Unsupported Auth mode\n\n' + JSON.stringify(jsonObj)
         throw 'Unsupported Auth mode'
