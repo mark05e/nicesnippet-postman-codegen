@@ -374,7 +374,7 @@ function writeLog(text = "Hello World") {
       inputArray = jsonObj.bearer
       const outputArray = inputArray.map(item => {
           if (item.key === "token") {
-            return { key: "Auth", value: `Bearer ${item.value}` };
+            return { key: "Authentication", value: `Bearer ${item.value}` };
           }
           return item;
         });
