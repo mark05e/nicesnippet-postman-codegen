@@ -277,7 +277,7 @@ function writeLog(text = "Hello World") {
     // https://www.cs.cmu.edu/~pattis/15-1XX/common/handouts/ascii.html
     let enable = true
     if (enable) {
-        return "{CHAR(10)}"
+        return " {CHAR(10)}"
     } else {
         return ''
     }
@@ -374,7 +374,7 @@ function writeLog(text = "Hello World") {
       inputArray = jsonObj.bearer
       const outputArray = inputArray.map(item => {
           if (item.key === "token") {
-            return { key: "Authentication", value: `Bearer ${item.value}` };
+            return { key: "Authorization", value: `Bearer ${item.value}` };
           }
           return item;
         });
