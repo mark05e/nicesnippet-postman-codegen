@@ -108,7 +108,12 @@ function writeLog(text = "Hello World") {
   
     let fullurl = protocol
     fullurl += "://"
-    fullurl += host
+    // if the host variable has https, skip using protocol
+    if (host.includes("http://") || host.includes("https://")) {
+        fullurl = host
+    } else {
+        fullurl += host
+    }
     fullurl += "/"
     if (path) {
         fullurl += path
