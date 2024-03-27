@@ -250,7 +250,16 @@ function genBodyCode(jsonObj) {
 
         // TRACE "RestProxy_Body = {RestProxy_Body}"
         bodyCode += '\n\n// Debug\nTRACE "RestProxy_Body = {RestProxy_Body}"'
-    } else if (jsonObj.mode.toLowerCase() === 'urlencoded') {
+    } else if (jsonObj.mode.toLowerCase() === 'urlencoded' || jsonObj.mode.toLowerCase() === 'formdata') {
+
+        let keyValuesArray;
+    
+        if (jsonObj.urlencoded) {
+          keyValuesArray = jsonObj.urlencoded;
+        } else {
+          keyValuesArray = jsonObj.formdata;
+        }
+        
         let keyValuesArray = jsonObj.urlencoded
 
         let textOutput = '';
